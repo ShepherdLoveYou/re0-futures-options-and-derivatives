@@ -11,6 +11,9 @@ env/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
+# Auto-generated welcome notebook for HF Space (built at container startup from README.md)
+Welcome.ipynb
+
 # IDE / OS
 .vscode/
 .idea/
