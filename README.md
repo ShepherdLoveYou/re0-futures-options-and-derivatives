@@ -123,7 +123,7 @@ python _test_notebooks.py
 Expected output / 预期输出：
 
 ```
-PASS: 18  FAIL: 0  TIMEOUT: 0  TOTAL: 18
+PASS: 17  FAIL: 0  TIMEOUT: 0  TOTAL: 17
 ```
 
 ---
