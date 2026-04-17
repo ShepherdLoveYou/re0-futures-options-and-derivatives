@@ -1,0 +1,261 @@
+公式速查 / Quick-reference formulas:
+- 点值 = 合约大小 × 最小变动单位 (0.01 / 0.0001) × 基准货币对美元的当前报价 / 该货币对的当前报价。也称作一个点的价值。
+  Pip value = ContractSize × TickSize × (base/USD quote ÷ pair quote). Also called the value of one point.
+- 库存费按百分比模式：(手数 × 隔夜时间的价格 × 合约大小 × 库存费% / 360) × 持仓天数
+  Swap (percent mode): (Lots × OvernightPrice × ContractSize × Swap% / 360) × DaysHeld
+- 库存费按点差模式：手数 × 库存费 × 点值 × 持仓天数
+  Swap (pip mode): Lots × SwapRate × PipValue × DaysHeld
+- 期货隔夜利息：手数 × 现价 × 合约 × (-1%) / 360 × 天数
+  Futures-mode swap: Lots × Price × Contract × (−1 %) / 360 × Days
+- 美股手续费 = 手数 × 合约大小 × 开仓价格 × 0.10%
+  US-stock commission = Lots × ContractSize × EntryPrice × 0.10 %
+- 港股手续费 = 手数 × 合约大小 × 开仓价格 × 0.35%
+  HK-stock commission = Lots × ContractSize × EntryPrice × 0.35 %
+- 多单股息 = 每股股息 × 合约量 × 手数 − 1 %(每股股息 × 合约量 × 手数)
+  Long dividend = DivPerShare × Contract × Lots − 1 %(DivPerShare × Contract × Lots)
+- 空单股息 = −每股股息 × 合约量 × 手数 − 1 %(每股股息 × 合约量 × 手数)
+  Short dividend = −DivPerShare × Contract × Lots − 1 %(DivPerShare × Contract × Lots)
+
+- 净值 = 余额 + 浮动盈亏 / Equity = Balance + Floating P&L
+- 预付款 = 保证金 / Used margin = Margin
+- 可用预付款 = 净值 − 预付款 / Free margin = Equity − UsedMargin
+- 预付款比例 = 净值 / 预付款 × 100 % / Margin level = Equity / UsedMargin × 100 %
+- 盈亏 = 手数 × 合约量 × 价差 / P&L = Lots × Contract × PriceDiff
+
+- 周三隔夜 = 3 天库存费（含周末），其余每晚 = 1 天
+  Wednesday overnight = 3 days of swap (rolls the weekend in); every other night = 1 day.
+- 一周五晚 = 1 + 1 + 3 + 1 + 1 = 7 天库存费
+  Five weekday nights = 1 + 1 + 3 + 1 + 1 = 7 days of swap.
+
+
+考题 1 / Question 1
+账户净值 1,000 USD，杠杆 300 倍，交易美股 Meta（META），开仓价 320.00。
+Equity USD 1,000, leverage 1:300, trading US stock Meta (META), entry 320.00.
+
+问 1: 交易 1 手买单的总手续费是多少？
+Q1: Total commission on a 1-lot buy?
+ans: 美股手续费 = Lots × Contract × EntryPrice × 0.10 %
+     = 1 × 100 × 320.00 × 0.001
+     = 32.00 USD
+
+问 2: 若 META 当日派息每股 1.50 USD，持有空单，将收取多少股息费用？
+Q2: If META pays a 1.50 USD dividend per share today and the client is short, what is the dividend charge?
+ans: 空单股息 / Short dividend = −101 %(DivPerShare × Contract × Lots)
+     = −101 % × (1.50 × 100 × 1)
+     = −151.50 USD (short pays the platform)
+
+
+考题 2 / Question 2
+交易 EURUSD，杠杆 500 倍，净值 3,000 USD，开仓价 1.08000，隔夜利息买单 −4.23。
+Trading EURUSD, leverage 1:500, equity USD 3,000, entry 1.08000, long swap rate −4.23.
+
+问: 持仓 3 手多单三晚需支付多少隔夜利息？请写下价格单位。
+Q: What swap is paid on 3 lots long for three nights? State the currency.
+ans: 外汇按点差模式 / FX → pip mode = Lots × SwapRate × PipValue × Days
+     EURUSD 点值 / pip value = 0.00001 × 100,000 = 1 USD / point
+     = 3 × (−4.23) × 1 × 3
+     = −38.07 USD
+
+
+考题 3 / Question 3
+净值 2,000 USD，杠杆 400 倍，交易 Alphabet（GOOG），开仓价 172.00，1 手 = 100 股。
+Equity USD 2,000, leverage 1:400, trading Alphabet (GOOG), entry 172.00, 1 lot = 100 shares.
+
+问 1: 请问交易 2 手的总手续费是多少？
+Q1: Total commission on 2 lots?
+ans: 美股手续费 = Lots × Contract × EntryPrice × 0.10 %
+     = 2 × 100 × 172.00 × 0.001
+     = 34.40 USD
+
+问 2: 若持 2 手多单遇到当日派息每股 2.10 USD，应收取多少股息？
+Q2: Holding 2 lots long across a 2.10 USD dividend, what dividend is received?
+ans: 多单股息 / Long dividend = (DivPerShare × Contract × Lots) × 99 %
+     = (2.10 × 100 × 2) × 0.99
+     = +415.80 USD
+
+
+考题 4 / Question 4
+交易恒生指数（HK50），当前价位 18,300.00。
+Trading Hang Seng Index (HK50), current level 18,300.00.
+
+问: 交易 5 手共需支付多少手续费？请写下价格单位。
+Q: Total commission on 5 lots? State the currency.
+ans: 港股手续费 = Lots × Contract × EntryPrice × 0.35 %
+     HK50 合约量 / contract size = 1
+     = 5 × 1 × 18,300.00 × 0.0035
+     = 320.25 HKD
+
+
+考题 5 / Question 5
+交易白银（XAGUSD），杠杆 100 倍，净值 4,000 USD，当前价格 28.300。
+Trading silver (XAGUSD), leverage 1:100, equity USD 4,000, price 28.300.
+
+若隔夜利息为卖单 −6.00 USD/手/晚，空仓 2 手三晚共需支付多少利息？
+Short swap −6.00 USD / lot / night. What interest is paid for 2 lots short over 3 nights?
+ans: 题目已直接给出 USD / 手 / 晚 单位 / Problem gives the rate directly in USD / lot / night:
+     = Lots × SwapRate × Days
+     = 2 × (−6.00) × 3
+     = −36.00 USD
+
+
+考题 6 / Question 6
+净值 1,500 USD，交易 BTCUST，隔夜价格 98,752.00（隔夜利息在 MT4 查找）。
+Equity USD 1,500, trading BTCUST, overnight price 98,752.00 (swap rate looked up in MT4).
+
+问 1: 持仓 3 手买单周三到周五需支付多少隔夜利息？
+Q1: What swap is paid on 3 lots long from Wed to Fri?
+ans: BTCUST 使用期货隔夜利息公式 / Use the futures-mode formula
+     = Lots × Price × Contract × (−1 %) / 360 × Days
+     BTCUST 合约量 / contract size = 1
+     周三到周五 / Wed → Fri = Wed night (3d) + Thu night (1d) = 4 days
+     = (3 × 98,752 × 1 × (−0.01) / 360) × 4
+     = 4 × (−2,962.56 / 360)
+     = −8.23 × 4
+     = −32.92 USD
+
+
+考题 7 / Question 7
+净值 10,000 USD，交易 Amazon（AMZN），开仓价 129.50。
+Equity USD 10,000, trading Amazon (AMZN), entry 129.50.
+
+问 1: 交易 5 手需支付多少手续费？
+Q1: Commission on 5 lots?
+ans: 美股手续费 = Lots × Contract × EntryPrice × 0.10 %
+     = 5 × 100 × 129.50 × 0.001
+     = 64.75 USD
+
+问 2: 若该日派息每股为 3 USD，空单应支付多少股息？
+Q2: On a 3 USD dividend, what does the short side pay?
+ans: 空单股息 / Short dividend = −101 %(DivPerShare × Contract × Lots)
+     = −101 % × (3.00 × 100 × 5)
+     = −(1,500.00 + 15.00)
+     = −1,515.00 USD
+
+
+考题 8 / Question 8
+杠杆 400 倍，净值 800 USD，交易 US30 指数（隔夜利息在 MT4 查找）。
+Leverage 1:400, equity USD 800, trading US30 index (swap rate looked up in MT4).
+
+问: 交易 2 手做多并持仓周二到周三，共需支付多少隔夜费用？请写下价格单位。
+Q: What total overnight charge for 2 lots long, held from Tue to Wed? State the currency.
+ans: US30 隔夜利息公式 / US30 overnight formula:
+     Lots × Price × Contract × (−6.25 %) / 360 × Days
+     US30 合约量 / contract size = 1
+     周二到周三 / Tue → Wed = Tue night = 1 day
+     US30 ≈ 48,670
+     = 2 × 48,670 × 1 × (−6.25 %) / 360 × 1
+     = 16.89 USD
+
+
+考题 9 / Question 9
+交易 1 手 GBPUSD，隔夜利息多单 −6.21，持仓一周五晚需支付多少？
+Trading 1 lot GBPUSD, long swap −6.21. What does it cost for 5 weeknights held?
+ans: 库存费按点差模式 / Swap (pip mode) = Lots × SwapRate × PipValue × Days
+     GBPUSD 点值 / pip value = 0.00001 × 100,000 = 1 USD / point
+     一周五晚 / 5 weeknights = Mon(1) + Tue(1) + Wed(3) + Thu(1) + Fri(1) = 7 days
+     = 1 × (−6.21) × 1 × 7
+     = −43.47 USD
+
+
+考题 10 / Question 10
+净值 2,500 USD，杠杆 100 倍，交易 TSLA，开仓价 785.00；TSLA 当日派息每股 1.75。
+Equity USD 2,500, leverage 1:100, trading TSLA, entry 785.00; TSLA dividend 1.75 USD / share.
+
+问 (i): 交易 3 手需支付多少手续费？
+Q(i): Commission on 3 lots?
+ans: 美股手续费 = Lots × Contract × EntryPrice × 0.10 %
+     = 3 × 100 × 785.00 × 0.001
+     = 235.50 USD
+
+问 (ii): 持空单共应支付多少股息费用？
+Q(ii): Dividend paid by the short side?
+ans: 空单股息 / Short dividend = −(DivPerShare × Contract × Lots) − 1 %(DivPerShare × Contract × Lots)
+     = −101 % × (1.75 × 100 × 3)
+     = −530.25 USD
+
+
+考题 11 / Question 11
+净值 3,000 USD，杠杆 400 倍，交易港股小米（1810.HK），开仓价 14.60，USDHKD 7.82。
+Equity USD 3,000, leverage 1:400, trading HK-listed Xiaomi (1810.HK), entry 14.60, USDHKD 7.82.
+
+问 1: 交易 10 手手续费是多少？
+Q1: Commission on 10 lots?
+ans: 港股手续费 = Lots × Contract × EntryPrice × 0.35 %
+     港股合约量 / HK-stock contract size = 100 shares per lot
+     = 10 × 100 × 14.60 × 0.0035
+     = 51.10 HKD
+     = 6.53 USD
+
+问 2: 若每股股息为 0.40 HKD，10 手空单应支付多少股息费用（单位 USD）？
+Q2: If the dividend is 0.40 HKD / share, what does a 10-lot short pay (in USD)?
+ans: 空单股息 (HKD) / Short dividend (HKD) = −(DivPerShare × Contract × Lots) − 1 %(DivPerShare × Contract × Lots)
+     = −101 % × (0.40 × 100 × 10)
+     = −404.00 HKD
+     = −51.66 USD
+
+
+考题 12 / Question 12
+交易 3 手 ETHUST，当前价 2,300，杠杆 100 倍，净值 5,000 USD。
+Trading 3 lots ETHUST at 2,300, leverage 1:100, equity USD 5,000.
+
+问: 持仓周一到周五隔夜利息为多少？
+Q: What is the swap paid from Monday to Friday?
+ans: ETHUST 使用期货隔夜利息公式 / Use the futures-mode formula
+     = Lots × Price × Contract × (−1 %) / 360 × Days
+     ETHUST 合约量 / contract size = 1
+     周一到周五 / Mon → Fri = Mon(1) + Tue(1) + Wed(3) + Thu(1) = 4 nights = 6 days
+     = 3 × 2,300 × 1 × (−0.01) / 360 × 6
+     = −69.00 / 360 × 6
+     = −0.1917 × 6
+     = −1.15 USD
+
+
+考题 13 / Question 13
+净值 7,000 USD，杠杆 300 倍，交易 NAS100（纳指）。
+Equity USD 7,000, leverage 1:300, trading NAS100 (Nasdaq index).
+
+问: 交易 5 手并持仓周三到周四，若隔夜利息卖单为 −3.40，总费用是多少？
+Q: 5 lots short held from Wed to Thu, short swap −3.40. Total cost?
+ans: 点差模式 / Pip mode. NAS100 合约量 / contract size = 1; 周三到周四 / Wed → Thu = Wed night = 3 days
+     点值 / pip value = 0.01 × 1 = 0.01 USD / point
+     Total = Lots × SwapRate × PipValue × Days
+           = 5 × (−3.40) × 0.01 × 3
+           = −0.51 USD
+
+
+考题 14 / Question 14
+净值 9,000 USD，杠杆 200 倍，交易美股 Netflix（NFLX），开仓价 400.00。
+Equity USD 9,000, leverage 1:200, trading US stock Netflix (NFLX), entry 400.00.
+
+交易 1 手手续费是多少？
+Commission on 1 lot?
+ans: 美股手续费 = Lots × Contract × EntryPrice × 0.10 %
+     = 1 × 100 × 400 × 0.001
+     = 40 USD
+
+若派息每股 4.00 USD，空单将支付多少股息费用？
+On a 4.00 USD dividend, what does the short pay?
+ans: 空单股息 / Short dividend = −101 %(DivPerShare × Contract × Lots)
+     = −101 % × (4 × 100 × 1)
+     = −404.00 USD
+
+
+考题 15 / Question 15
+交易 2 手日经指数（JPN225），当前点位 18,400。
+Trading 2 lots Nikkei 225 index (JPN225), level 18,400.
+
+问 1: 买入 2 手手续费为多少？
+Q1: Commission on 2 lots bought?
+ans: 手续费率按 0.1 % 算，指数型一般 1 手 = 1。
+     Use a 0.1 % commission rate; index contracts are typically 1 lot = 1.
+     Commission = Lots × Contract × EntryPrice × 0.1 %
+                = 2 × 1 × 18,400 × 0.001
+                = 36.8 USD
+
+问 2: 若隔夜利息为 −5.35，持仓周五到周一总利息是多少？
+Q2: With swap −5.35, what is the total charge for holding from Fri to Mon?
+ans: 库存费按点差模式 / Swap (pip mode) = Lots × SwapRate × PipValue × Days
+     JPN225 合约量 / contract size = 1, 点值 / pip value = 0.01 × 1 = 0.01
+     周五到周一 / Fri → Mon = Fri night = 3 days (rolls across the weekend, including Sat + Sun)
+     = 2 × (−5.35) × 0.01 × 3
+     = −0.32 USD

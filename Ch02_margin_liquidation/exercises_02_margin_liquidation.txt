@@ -1,0 +1,196 @@
+题目 2（保证金 + 爆仓价，含交叉盘与加密货币） / Exercise Set 2 (Margin + Liquidation Price, incl. Cross Pairs and Crypto)
+
+1)
+已知：账户杠杆为 1:100，账户净值为 6,000 美元，当前 GOOGL（Alphabet Inc.）价格为 133.45 美元。若客户买入 2.5 手。
+Given: leverage 1:100, equity USD 6,000, GOOGL (Alphabet Inc.) at USD 133.45. The client buys 2.5 lots.
+— GOOGL 的合约大小是多少？ / Contract size of GOOGL?
+ans: 美股CFD的合约量是 100 股/手 / US-stock CFD contract size = 100 shares per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 100 = 1 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 2.5 × 100 × 133.45 / 100 = 333.63 USD
+
+— 若止损比例为 50%，请问爆仓时的 GOOGL 价格是多少？ / With stop-out ratio 50 %, what is the liquidation price?
+ans: Long → price must fall to liquidate. Condition: Equity = Margin × Stop-out Ratio.
+     i.e. 6,000 − (133.45 − LiqPrice) × 2.5 × 100 = 333.63 × 0.50
+     → Stop-out price = 110.12 USD.
+
+
+2)
+已知：账户杠杆为 1:400，账户净值为 3,200 美元，XTI 原油报价为：卖出价 74.350，买入价 74.450。若客户卖出 1.8 手。
+Given: leverage 1:400, equity USD 3,200, XTI crude bid 74.350 and ask 74.450. The client sells 1.8 lots short.
+— 合约大小是多少？ / Contract size?
+ans: 原油的合约量是 1,000 桶/手 / Crude oil contract size = 1,000 barrels per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.001 × 1,000 = 1 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 1.8 × 1,000 × 74.350 / 400 = 334.58 USD
+     (Short → use the bid = 74.350.)
+
+— 若止损比例为 50%，请问爆仓时的原油价格是多少？ / Liquidation price with 50 % stop-out?
+ans: Short → price must rise to liquidate. Condition: Equity = Margin × Stop-out Ratio.
+     3,200 − (P − 74.350) × 1.8 × 1,000 = 334.58 × 0.50
+     → Stop-out price = 76.035 USD.
+
+
+3)
+已知：账户杠杆为 1:300，账户净值为 5,000 美元，当前 HK50 指数价格为 22,959.60。USDHKD: 7.64523。若客户买入 1.5 手。
+Given: leverage 1:300, equity USD 5,000, HK50 index at 22,959.60, USDHKD 7.64523. The client buys 1.5 lots.
+— 合约大小是多少？ / Contract size?
+ans: HK50 的合约量是 1 / HK50 contract size = 1.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 1 = 0.01 HKD / point
+     Convert to USD: 0.01 / 7.64523 ≈ 0.0013 USD / point.
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin in HKD first, then convert to USD:
+     Margin(HKD) = Lots × Contract × Price / Leverage = 1.5 × 1 × 22,959.60 / 300 = 114.80 HKD
+     Margin(USD) = 114.80 / 7.64523 = 15.01 USD
+
+— 若止损比例为 30%，请问爆仓时的 HK50 价格是多少？ / Liquidation price with 30 % stop-out?
+     Margin = 114.80
+     5,000 − (22,959.60 − P) × 1.5 = 114.80 × 0.30
+     → Stop-out price = 19,649.23.
+
+
+4)
+已知：账户杠杆为 1:500，账户净值为 2,000 美元，EURGBP 报价为：卖出价 0.87230，买入价 0.87260。若客户卖出 2 手 EURGBP。
+Given: leverage 1:500, equity USD 2,000, EURGBP bid 0.87230 and ask 0.87260. The client sells 2 lots short.
+— 合约大小是多少？ / Contract size?
+ans: 外汇的合约量是 100,000 单位/手 / FX contract size = 100,000 units per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.00001 × 100,000 = 1 GBP / pip
+
+— 所需保证金是多少？ / Required margin?
+ans: EURGBP is a cross pair, base currency = EUR, so we first compute EURUSD:
+     EURUSD = EURGBP × GBPUSD = 0.87230 × 1.33437 = 1.16397
+     Margin = Lots × Contract × EURUSD / Leverage = 2 × 100,000 × 1.16397 / 500 = 465.59 USD
+     (Short EURGBP → use the bid = 0.87230.)
+
+— 若止损比例为 50%，请问爆仓时 EURGBP 的价格是多少？（GBPUSD 取 1.33437）/ Liquidation price with 50 % stop-out? (Take GBPUSD = 1.33437.)
+ans: Short → price must rise to liquidate.
+     Condition: Equity = Margin × Stop-out Ratio.
+     Per-lot pip value = 1 GBP / pip = 1.33437 USD / pip.
+     2,000 − (P − 0.87230) × 2 × 100,000 × 1.33437 = 465.59 × 0.50
+     → Stop-out price = 0.87892.
+
+
+5)
+已知：账户杠杆为 1:250，账户净值为 4,000 美元，BTCUST（比特币兑美元）当前价格为 63,420.50 美元。若客户买入 0.5 手 BTCUST。
+Given: leverage 1:250, equity USD 4,000, BTCUST (Bitcoin vs USD) at USD 63,420.50. The client buys 0.5 lots long.
+— 合约大小是多少？ / Contract size?
+ans: BTCUST 的合约量是 1 BTC/手 / BTCUST contract size = 1 BTC per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 1 = 0.01 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 0.5 × 1 × 63,420.50 / 250 = 126.84 USD
+
+— 若止损比例为 30%，请问爆仓时 BTCUST 的价格是多少？ / Liquidation price with 30 % stop-out?
+ans: Long → price must fall to liquidate.
+     Condition: Equity = Margin × Stop-out Ratio.
+     i.e. 4,000 − (63,420.50 − P) × 0.5 × 1 = 126.84 × 0.30
+     → Stop-out price = 55,496.60 USD.
+
+
+6)
+已知：账户杠杆为 1:200，账户净值为 7,000 美元，ETHUST（以太坊兑美元）当前价格为 3,220.75。若客户做空 0.8 手 ETHUST。
+Given: leverage 1:200, equity USD 7,000, ETHUST (Ethereum vs USD) at 3,220.75. The client shorts 0.8 lots.
+— 合约大小是多少？ / Contract size?
+ans: ETHUST 的合约量是 1 ETH/手 / ETHUST contract size = 1 ETH per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 1 = 0.01 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 0.8 × 1 × 3,220.75 / 200 = 12.88 USD
+
+— 若止损比例为 50%，请问爆仓时 ETHUST 的价格是多少？ / Liquidation price with 50 % stop-out?
+ans: Short → price must rise to liquidate. Condition: Equity = Margin × Stop-out Ratio.
+     i.e. 7,000 − (P − 3,220.75) × 0.8 × 1 = 12.88 × 0.50
+     → Stop-out price = 11,962.70 USD.
+     (Note: the notional of only USD 2,576.60 is tiny versus the USD 7,000 equity, so the stop-out price sits very far away.)
+
+
+7)
+已知：账户杠杆为 1:100，账户净值为 5,500 美元，TSLA（特斯拉）当前价格为 216.80 美元。若客户买入 4 手 TSLA 股票。
+Given: leverage 1:100, equity USD 5,500, TSLA (Tesla) at USD 216.80. The client buys 4 lots long.
+— 合约大小是多少？ / Contract size?
+ans: 美股CFD的合约量是 100 股/手 / US-stock CFD contract size = 100 shares per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 100 = 1 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 4 × 100 × 216.80 / 100 = 867.20 USD
+
+— 若止损比例为 50%，请问爆仓时 TSLA 的价格是多少？ / Liquidation price with 50 % stop-out?
+ans: Long → price must fall to liquidate.
+     Condition: Equity = Margin × Stop-out Ratio.
+     i.e. 5,500 − (216.80 − P) × 4 × 100 = 867.20 × 0.50
+     → Stop-out price = 204.13 USD.
+
+
+8)
+已知：账户杠杆为 1:300，账户净值为 2,500 美元，XAGUSD（白银）报价为：卖出价 28.415，买入价 28.435。若客户卖出 1.3 手白银。
+Given: leverage 1:300, equity USD 2,500, XAGUSD (silver) bid 28.415 and ask 28.435. The client sells 1.3 lots short.
+— 合约大小是多少？ / Contract size?
+ans: 白银的合约量是 5,000 盎司/手 / Silver contract size = 5,000 ounces per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.001 × 5,000 = 5 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 1.3 × 5,000 × 28.415 / 300 = 615.66 USD
+     (Short → use the bid = 28.415.)
+
+— 若止损比例为 50%，请问爆仓时 XAGUSD 的价格是多少？ / Liquidation price with 50 % stop-out?
+ans: Short → price must rise to liquidate.
+     Condition: Equity = Margin × Stop-out Ratio.
+     i.e. 2,500 − (P − 28.415) × 1.3 × 5,000 = 615.66 × 0.50
+     → Stop-out price = 28.752 USD.
+
+
+9)
+已知：账户杠杆为 1:400，账户净值为 3,800 美元，当前 US30（道琼斯指数）价格为 39,420.60。若客户开设 1 手空头仓位。
+Given: leverage 1:400, equity USD 3,800, US30 (Dow Jones) at 39,420.60. The client opens 1 lot short.
+— 合约大小是多少？ / Contract size?
+ans: US30 的合约量是 1 / US30 contract size = 1.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 1 = 0.01 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 1 × 1 × 39,420.60 / 400 = 98.55 USD
+
+— 若止损比例为 30%，请问爆仓时 US30 的价格是多少？ / Liquidation price with 30 % stop-out?
+ans: Short → price must rise to liquidate.
+     Condition: Equity = Margin × Stop-out Ratio.
+     i.e. 3,800 − (P − 39,420.60) × 1 × 1 = 98.55 × 0.30
+     → Stop-out price = 43,191.03.
+
+
+10)
+已知：账户杠杆为 1:500，账户净值为 1,500 美元，EURJPY 报价：卖出价 162.276，买入价 162.298。USDJPY: 143.076。若客户买入 1 手 EURJPY，止损比例为 50%。
+Given: leverage 1:500, equity USD 1,500, EURJPY bid 162.276 and ask 162.298, USDJPY 143.076. The client buys 1 lot long with stop-out ratio = 50 %.
+— 所需保证金是多少？ / Required margin?
+ans: EURJPY is a cross pair, base currency = EUR, so compute EURUSD first:
+     EURUSD = EURJPY / USDJPY = 162.298 / 143.076 = 1.13435
+     Margin = Lots × Contract × EURUSD / Leverage = 1 × 100,000 × 1.13435 / 500 = 226.87 USD
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.001 × 100,000 = 100 JPY / point
+     Convert to USD: 100 / 143.076 = 0.70 USD / point.
+
+— 爆仓时 EURJPY 的价格是多少？ / Liquidation price?
+ans: Long → price must fall to liquidate.
+     Condition: Equity = Margin × Stop-out Ratio.
+     i.e. 1,500 − (162.298 − P) × 1 × 100,000 / 143.076 = 226.87 × 0.50
+     → Stop-out price = 160.314.

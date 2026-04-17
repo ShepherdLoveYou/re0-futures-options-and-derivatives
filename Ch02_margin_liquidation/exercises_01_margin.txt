@@ -1,0 +1,178 @@
+题目 1（保证金计算） / Exercise Set 1 (Margin Calculations)
+
+1) 已知：账户杠杆为100，账户净值为10,000美元，黄金当前卖价为2300.50，买价为2300.70。若客户以2手卖出黄金。
+Given: leverage 1:100, account equity USD 10,000, gold bid 2300.50 and ask 2300.70. The client sells 2 lots of gold.
+— 黄金的合约量是多少？ / What is the contract size of gold?
+ans: 黄金的合约量是 100 盎司/手 / Gold contract size = 100 ounces per lot (100 oz / lot).
+
+— 所需保证金是多少？ / What margin is required?
+ans: Margin = Lots × Contract × Price / Leverage = 2 × 100 × 2300.50 / 100 = 4,601.00 USD
+
+— 点值是多少？ / What is the pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 100 = 1 USD / point
+
+
+2) 已知：账户杠杆为200，账户净值为4,000美元，布伦特原油当前买价为88.400，卖价为88.450。若客户以3手买入。
+Given: leverage 1:200, equity USD 4,000, Brent crude bid 88.400 and ask 88.450. The client buys 3 lots.
+— 合约量是多少？ / Contract size?
+ans: 原油的合约量是 1,000 桶/手 / Crude oil contract size = 1,000 barrels per lot (1,000 bbl / lot).
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.001 × 1,000 = 1 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 3 × 1,000 × 88.450 / 200 = 1,326.75 USD
+     (Long → use the ask price = 88.450.)
+
+
+3) 已知：账户杠杆为500，账户净值为1,500美元，德指（GER40）当前价格为18,350.20。客户开空3手仓位。
+Given: leverage 1:500, equity USD 1,500, DAX (GER40) price 18,350.20. The client shorts 3 lots.
+— GER40的合约量是多少？ / Contract size of GER40?
+ans: GER40 的合约量是 1 / GER40 contract size = 1.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 1 = 0.01 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 3 × 1 × 18,350.20 / 500 = 110.10 USD
+
+
+4) 已知：账户杠杆为400，账户净值为2,500美元，白银买价为27.180，卖价为27.210。若客户做空2手白银。
+Given: leverage 1:400, equity USD 2,500, silver bid 27.180 and ask 27.210. The client shorts 2 lots of silver.
+— 合约量是多少？ / Contract size?
+ans: 白银的合约量是 5,000 盎司/手 / Silver contract size = 5,000 ounces per lot (5,000 oz / lot).
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.001 × 5,000 = 5 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 2 × 5,000 × 27.180 / 400 = 679.50 USD
+     (Short → use the bid = 27.180.)
+
+
+5) 已知：账户杠杆为300，账户净值为6,000美元，AAPL价格为180.25美元。若客户买入5手AAPL股票。
+Given: leverage 1:300, equity USD 6,000, AAPL price USD 180.25. The client buys 5 lots of AAPL.
+— 合约量是多少？ / Contract size?
+ans: 美股CFD的合约量是 100 股/手 / US-stock CFD contract size = 100 shares per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 100 = 1 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 5 × 100 × 180.25 / 300 = 300.42 USD
+
+
+6) 已知：账户杠杆为100，账户净值为12,000美元，现有USDJPY价格为149.231。若客户买入3手USDJPY。
+Given: leverage 1:100, equity USD 12,000, USDJPY at 149.231. The client buys 3 lots of USDJPY.
+— 合约量是多少？ / Contract size?
+ans: 外汇的合约量是 100,000 单位/手 / FX contract size = 100,000 units per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.001 × 100,000 = 100 JPY / point
+     In USD: 100 JPY / 149.231 = 0.67 USD / point.
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × 1 (USD) / Leverage = 3 × 100,000 × 1 / 100 = 3,000.00 USD
+     (USDJPY's base currency = USD = account currency, so the multiplier is simply 1.)
+
+
+7) 已知：账户杠杆为500，账户净值为3,000美元，恒指（HK50）当前价格为17,123.50。客户开多2手仓位。
+Given: leverage 1:500, equity USD 3,000, Hang Seng (HK50) price 17,123.50. The client longs 2 lots.
+— HK50的合约量是多少？ / Contract size of HK50?
+ans: HK50 的合约量是 1 / HK50 contract size = 1.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 1 = 0.01 HKD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 2 × 1 × 17,123.50 / 500 = 68.49 USD
+
+
+8) 已知：账户杠杆为400，账户净值为2,000美元，GBPUSD报价为1.25341。若客户开仓1.5手多单。
+Given: leverage 1:400, equity USD 2,000, GBPUSD quote 1.25341. The client buys 1.5 lots long.
+— 合约量是多少？ / Contract size?
+ans: 外汇的合约量是 100,000 单位/手 / FX contract size = 100,000 units per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.00001 × 100,000 = 1 USD / point
+     (GBPUSD's quote currency = USD = account currency, so pip value is 1 USD directly.)
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 1.5 × 100,000 × 1.25341 / 400 = 470.03 USD
+
+
+9) 已知：账户杠杆为300，账户净值为7,500美元，TSLA当前价格为195.60美元。若客户以3手买入TSLA。
+Given: leverage 1:300, equity USD 7,500, TSLA price USD 195.60. The client buys 3 lots of TSLA.
+— 合约量是多少？ / Contract size?
+ans: 美股CFD的合约量是 100 股/手 / US-stock CFD contract size = 100 shares per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 100 = 1 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 3 × 100 × 195.60 / 300 = 195.60 USD
+
+
+10) 已知：账户杠杆为200，账户净值为9,000美元，WTI原油价格为86.35。若客户开空5手仓位。
+Given: leverage 1:200, equity USD 9,000, WTI crude at 86.35. The client shorts 5 lots.
+— 合约量是多少？ / Contract size?
+ans: 原油的合约量是 1,000 桶/手 / Crude oil contract size = 1,000 barrels per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.001 × 1,000 = 1 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 5 × 1,000 × 86.35 / 200 = 2,158.75 USD
+
+
+11) 已知：账户杠杆为100，账户净值为10,000美元，EURUSD当前价格为1.08812。若客户做多2手EURUSD。
+Given: leverage 1:100, equity USD 10,000, EURUSD 1.08812. The client buys 2 lots long.
+— 合约量是多少？ / Contract size?
+ans: 外汇的合约量是 100,000 单位/手 / FX contract size = 100,000 units per lot.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.00001 × 100,000 = 1 USD / point
+     (EURUSD quote currency is USD, so pip value = 1 USD directly.)
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 2 × 100,000 × 1.08812 / 100 = 2,176.24 USD
+
+
+12) 已知：账户杠杆为500，账户净值为800美元，白银当前价格为26.910。若客户买入1手，爆仓比例为30%。
+Given: leverage 1:500, equity USD 800, silver at 26.910. The client buys 1 lot; stop-out ratio = 30 %.
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 1 × 5,000 × 26.910 / 500 = 269.10 USD
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.001 × 5,000 = 5 USD / point
+
+— 爆仓时的价格是多少？ / Liquidation price?
+ans: Long → the price must fall to trigger liquidation. Liquidation condition: Equity = Margin × Stop-out Ratio.
+     Solve: 800 − (26.910 − LiqPrice) × 1 × 5,000 = 269.10 × 0.30
+     → Stop-out price = 26.766 USD.
+
+
+14) 已知：账户杠杆为300，账户净值为2,500美元，US30（道指）价格为38,555.00。若客户做多2手。
+Given: leverage 1:300, equity USD 2,500, US30 (Dow Jones) at 38,555.00. The client buys 2 lots long.
+— 合约量是多少？ / Contract size?
+ans: US30 的合约量是 1 / US30 contract size = 1.
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 1 = 0.01 USD / point
+
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 2 × 1 × 38,555.00 / 300 = 257.03 USD
+
+
+15) 已知：账户杠杆为100，账户净值为5,500美元，黄金价格为2322.00，爆仓比例30%。客户开仓3手多单。
+Given: leverage 1:100, equity USD 5,500, gold at 2322.00, stop-out ratio = 30 %. The client buys 3 lots long.
+— 所需保证金是多少？ / Required margin?
+ans: Margin = Lots × Contract × Price / Leverage = 3 × 100 × 2,322.00 / 100 = 6,966.00 USD
+
+— 点值是多少？ / Pip value?
+ans: Pip value = TickSize × Contract = 0.01 × 100 = 1 USD / point
+
+— 触发强平的价格是多少？（请注明货币单位）/ What price triggers liquidation? (State the currency.)
+ans: Long → price must fall to liquidate. Liquidation condition: Equity = Margin × Stop-out Ratio.
+     i.e. 5,500 − (2,322.00 − LiqPrice) × 3 × 100 = 6,966.00 × 0.30
+     → Stop-out price = 2,310.63 USD.
