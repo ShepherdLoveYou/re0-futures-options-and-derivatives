@@ -1,3 +1,17 @@
+---
+title: Re0 Futures Options And Derivatives
+emoji: 💻🐳
+colorFrom: gray
+colorTo: green
+sdk: docker
+pinned: false
+tags:
+- jupyterlab
+suggested_storage: small
+license: mit
+short_description: "Re:0 — Starting Derivatives From Zero."
+---
+
 # Re:0 — 从零开始的衍生品 / Starting Derivatives From Zero
 
 _Re:0 &middot; Futures, Interest & Options — the finance class you thought was philosophy_
@@ -7,6 +21,10 @@ _Re:0 &middot; Futures, Interest & Options — the finance class you thought was
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Chapters](https://img.shields.io/badge/chapters-14-blueviolet)](#chapter-index--章节索引)
 [![Bilingual](https://img.shields.io/badge/docs-中文%20%2B%20English-red)](#)
+[![Open in HF Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Open%20in%20Space-yellow)](https://huggingface.co/spaces/jingjiang233/re0-futures-options-and-derivatives)
+
+> 🚀 **在线运行 / Run online**：本项目已部署到 [Hugging Face Space](https://huggingface.co/spaces/jingjiang233/re0-futures-options-and-derivatives)，可直接在浏览器里打开 JupyterLab 运行所有章节，无需本地环境。
+> This project is deployed as a Hugging Face Space — open JupyterLab in your browser and run all chapters with zero local setup.
 
 ---
 
