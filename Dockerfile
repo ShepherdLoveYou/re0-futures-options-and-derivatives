@@ -51,11 +51,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
 # Working directory
 WORKDIR /app
 
-# User setup
+# User setup — no sudo grant, so visitors can't escalate to modify app files
 RUN adduser --disabled-password --gecos '' --shell /bin/bash user && \
     mkdir -p /home/user/.cache /home/user/.config /home/user/app && \
-    chown -R user:user /home/user /app && \
-    echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
+    chown -R user:user /home/user /app
 
 # Miniconda Python 3.10
 USER user
@@ -87,7 +86,20 @@ RUN --mount=target=requirements.txt,source=requirements.txt \
 # App files
 COPY --chown=user:user . /home/user/app
 
+# Bake a Welcome.ipynb from README.md before the directory is locked down
+RUN python3 /home/user/app/_generate_welcome.py
+
 RUN chmod +x /home/user/app/start_server.sh
+
+# Lock down the app directory: root-owned, world-readable, nobody writable.
+# The `user` account (which visitor code runs as) can read and execute, but
+# every save / delete / create attempt under /home/user/app fails at the OS
+# level. Combined with the sudo grant being removed above, this prevents
+# shared-container modifications from leaking between visitors.
+USER root
+RUN chown -R root:root /home/user/app && \
+    chmod -R a-w,a+rX /home/user/app
+USER user
 
 # Jupyter template path for Python 3.10
 COPY --chown=user:user login.html /home/user/miniconda/lib/python3.10/site-packages/jupyter_server/templates/login.html
