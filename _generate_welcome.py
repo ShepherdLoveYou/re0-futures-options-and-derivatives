@@ -1,20 +1,22 @@
-"""Generate Welcome.ipynb — the landing notebook for the HF Space.
+"""Generate Welcome.ipynb — the HF Space landing notebook.
 
-Emits a chapter-navigation TOC (bilingual, grouped by part) that opens each
-chapter's primary notebook via a relative JupyterLab tree URL. Invoked at
-Docker build time by the Dockerfile so the Space lands on a rendered
-welcome page regardless of JupyterLab's workspace state.
+Takes the repo's README.md and splices in a clickable chapter-navigation
+TOC (each English title links straight to the chapter's primary notebook),
+so visitors land on the full bilingual tutorial overview with one-click
+chapter access. Invoked by the Dockerfile at image build time, before the
+lockdown.
 """
 
 import json
 import pathlib
+import re
 
 APP_DIR = pathlib.Path(__file__).resolve().parent
 
 # (chapter_dir, primary_notebook, english_title, chinese_title)
 PARTS: list[tuple[str, list[tuple[str, str, str, str]]]] = [
     (
-        "Part 0 · Foundations / 基础",
+        "Part 0 — Starter / 起点",
         [
             (
                 "Ch00_preface_fundamentals",
@@ -25,12 +27,12 @@ PARTS: list[tuple[str, list[tuple[str, str, str, str]]]] = [
         ],
     ),
     (
-        "Part 1 · Trading mechanics / 交易机制",
+        "Part 1 — FX Fundamentals / 外汇基础（必修）",
         [
             (
                 "Ch01_market_overview",
                 "Ch01_market_overview.ipynb",
-                "Financial-market overview · spot vs derivatives · leverage",
+                "Financial-market overview · spot vs. derivatives · leverage",
                 "金融市场总览",
             ),
             (
@@ -48,7 +50,7 @@ PARTS: list[tuple[str, list[tuple[str, str, str, str]]]] = [
         ],
     ),
     (
-        "Part 2 · Pricing / 定价核心",
+        "Part 2 — Traditional Derivatives / 传统衍生品",
         [
             (
                 "Ch04_forwards_futures",
@@ -89,13 +91,13 @@ PARTS: list[tuple[str, list[tuple[str, str, str, str]]]] = [
             (
                 "Ch10_interest_rate_swap",
                 "Ch10_interest_rate_swap.ipynb",
-                "Fixed vs floating cash-flow visualization",
+                "Fixed vs. floating cash-flow visualization",
                 "利率互换",
             ),
         ],
     ),
     (
-        "Part 3 · Crypto derivatives / 加密衍生品",
+        "Part 3 — Crypto Derivatives / 加密衍生品",
         [
             (
                 "Ch11_perpetual_swap",
@@ -106,7 +108,7 @@ PARTS: list[tuple[str, list[tuple[str, str, str, str]]]] = [
             (
                 "Ch12_usdt_vs_coin_margined",
                 "Ch12_usdt_vs_coin_margined.ipynb",
-                "Linear vs convex P&L · double whammy",
+                "Linear vs. convex P&L · double whammy",
                 "U 本位 vs 币本位",
             ),
             (
@@ -118,7 +120,7 @@ PARTS: list[tuple[str, list[tuple[str, str, str, str]]]] = [
         ],
     ),
     (
-        "Part 4 · Capstone / 综合",
+        "Part 4 — Integrated Practice / 综合实战",
         [
             (
                 "Ch14_trading_desk",
@@ -130,50 +132,46 @@ PARTS: list[tuple[str, list[tuple[str, str, str, str]]]] = [
     ),
 ]
 
-INTRO = """# Re:0 — 从零开始的衍生品 / Starting Derivatives From Zero
-
-👋 欢迎。这是一门 14 章双语教程，把期货 / 期权 / 互换从直觉讲到公式。
-Welcome to a 14-chapter bilingual tour of futures, options and swaps —
-built from intuition up to the pricing equations.
-
-点击下方任何链接打开对应章节（在新 tab 中）。左侧文件浏览器也能看到全部文件。
-Click any link below to open that chapter in a new tab. The file browser
-on the left shows the full project tree.
-
-## 🎯 Reader paths / 读者地图
-
-| 背景 / Background | 建议路径 / Suggested path |
-|---|---|
-| 零基础 · Zero finance | Ch00 → Ch01 → … 顺序 / in order |
-| 已交易股票 · Stocks already | skim Ch00–Ch03，从 Ch04 精读 |
-| 只想学期权 · Options only | Ch05 → Ch06 → Ch07 → Ch08 → Ch09 |
-| 只想学加密永续 · Crypto perps | Ch01 → Ch02 → Ch11 → Ch12 → Ch13 |
-
----
-"""
-
-OUTRO = """
----
-
-## 🚀 Run elsewhere / 本地运行
-
-本地 / Local:
-
-```bash
-git clone https://github.com/ShepherdLoveYou/re0-futures-options-and-derivatives
-cd re0-futures-options-and-derivatives
-pip install -r requirements.txt
-jupyter lab
-```
-
-源码 & 反馈 / Source & feedback: <https://github.com/ShepherdLoveYou/re0-futures-options-and-derivatives>
+SPACE_NOTE = """\
+> 👋 你正在 Hugging Face Space 的 JupyterLab 里浏览本教程。点击下方任何章节标题即可在新 tab 中打开。Shift+Enter 执行 cell。
+> You're viewing this tutorial in the Hugging Face Space's JupyterLab. Click any chapter title below to open it in a new tab, and run cells with Shift+Enter.
 """
 
 
-def render_markdown() -> str:
-    lines: list[str] = [INTRO.strip(), ""]
+def strip_frontmatter(src: str) -> str:
+    """Drop the leading '---\\n...\\n---\\n' YAML block."""
+    if src.startswith("---"):
+        end = src.find("\n---", 3)
+        if end != -1:
+            return src[end + 4 :].lstrip()
+    return src
+
+
+def strip_badges(body: str) -> str:
+    """Remove shield/badge lines — irrelevant inside a running Space."""
+    return re.sub(r"^\[!\[.+?\)\]\(.+?\)\n", "", body, flags=re.MULTILINE)
+
+
+def replace_online_callout(body: str) -> str:
+    """Swap the README's 'deployed to HF Space' callout for a note that
+    makes sense when the reader is already inside the Space."""
+    pattern = re.compile(
+        r"^> 🚀 \*\*在线运行.*?zero local setup\.\n",
+        re.MULTILINE | re.DOTALL,
+    )
+    return pattern.sub(SPACE_NOTE, body, count=1)
+
+
+def build_clickable_tables() -> str:
+    """Emit the five Part tables with each English title linked straight
+    to its chapter notebook via a relative JupyterLab tree path."""
+    lines: list[str] = [
+        "点击任一英文标题，在新 tab 中打开对应章节 notebook。",
+        "Click any English title to open that chapter's notebook in a new tab.",
+        "",
+    ]
     for part_title, chapters in PARTS:
-        lines.append(f"## {part_title}\n")
+        lines.append(f"### {part_title}")
         lines.append("| # | Chapter / 章节 | 中文标题 |")
         lines.append("|---|---|---|")
         for folder, notebook, en_title, zh_title in chapters:
@@ -181,8 +179,16 @@ def render_markdown() -> str:
             href = f"./{folder}/{notebook}"
             lines.append(f"| {ch_num} | [{en_title}]({href}) | {zh_title} |")
         lines.append("")
-    lines.append(OUTRO.strip())
-    return "\n".join(lines)
+    return "\n".join(lines).rstrip()
+
+
+def replace_part_tables(body: str, new_tables: str) -> str:
+    """Replace the five '### Part N — ...' README tables with the
+    clickable version. Leaves '## Chapter index' header and '### Bonus'
+    subsection intact."""
+    pattern = re.compile(r"### Part 0 —.*?(?=\n### Bonus)", re.DOTALL)
+    new_body, n = pattern.subn(new_tables + "\n", body)
+    return new_body if n else body
 
 
 def build_notebook(body: str) -> dict:
@@ -207,7 +213,12 @@ def build_notebook(body: str) -> dict:
 
 
 def main() -> None:
-    body = render_markdown()
+    readme = (APP_DIR / "README.md").read_text(encoding="utf-8")
+    body = strip_frontmatter(readme)
+    body = strip_badges(body)
+    body = replace_online_callout(body)
+    body = replace_part_tables(body, build_clickable_tables())
+
     nb = build_notebook(body)
     (APP_DIR / "Welcome.ipynb").write_text(
         json.dumps(nb, ensure_ascii=False, indent=1),
