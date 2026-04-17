@@ -3,6 +3,17 @@ JUPYTER_TOKEN="${JUPYTER_TOKEN:-}"
 
 NOTEBOOK_DIR="/home/user/app"
 
+# Make .md files open as rendered Markdown Preview instead of raw editor
+SETTINGS_DIR="$HOME/.jupyter/lab/user-settings/@jupyterlab/docmanager-extension"
+mkdir -p "$SETTINGS_DIR"
+cat > "$SETTINGS_DIR/plugin.jupyterlab-settings" <<'JSON'
+{
+  "defaultViewers": {
+    "markdown": "Markdown Preview"
+  }
+}
+JSON
+
 jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
 
 jupyter-lab \
@@ -16,6 +27,7 @@ jupyter-lab \
     --ServerApp.tornado_settings="{'headers': {'Content-Security-Policy': 'frame-ancestors *'}}" \
     --ServerApp.cookie_options="{'SameSite': 'None', 'Secure': True}" \
     --ServerApp.disable_check_xsrf=True \
+    --ServerApp.default_url=/lab/tree/README.md \
     --LabApp.news_url=None \
     --LabApp.check_for_updates_class="jupyterlab.NeverCheckForUpdate" \
     --notebook-dir=$NOTEBOOK_DIR
