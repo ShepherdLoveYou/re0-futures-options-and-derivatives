@@ -3,6 +3,9 @@
 Thanks for wanting to make this tutorial better! This project is a bilingual (Chinese + English) interactive finance-derivatives course.
 谢谢你愿意让这份教程变得更好！这是一个中英双语的互动金融衍生品课程。
 
+Maintained by **精讲** ([GitHub: ShepherdLoveYou](https://github.com/ShepherdLoveYou) · [Hugging Face: jingjiang233](https://huggingface.co/jingjiang233)). Questions and proposals are welcome via GitHub Issues.
+维护者：**精讲**（[GitHub: ShepherdLoveYou](https://github.com/ShepherdLoveYou) · [Hugging Face: jingjiang233](https://huggingface.co/jingjiang233)），欢迎在 GitHub Issues 里提问或提议。
+
 ---
 
 ## How to contribute / 如何贡献

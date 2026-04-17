@@ -233,6 +233,17 @@ Space 基于 [`python:3.11-slim` 镜像](Dockerfile) 跑 JupyterLab，使用 HF 
 
 ---
 
+## Authors / 作者
+
+- **精讲** — author & maintainer / 作者与维护者
+  - GitHub: [ShepherdLoveYou](https://github.com/ShepherdLoveYou)
+  - Hugging Face: [jingjiang233](https://huggingface.co/jingjiang233)
+
+Contributions welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+欢迎贡献 —— 见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
+
+---
+
 ## License
 
 MIT — see [`LICENSE`](LICENSE).
