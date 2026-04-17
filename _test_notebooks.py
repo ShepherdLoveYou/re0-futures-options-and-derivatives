@@ -74,3 +74,4 @@ if fail_cnt or to_cnt:
             print(f"  [{status}] {rel} ({t:.0f}s)")
             if err:
                 print(f"      -> {err}")
+    sys.exit(1)
