@@ -53,6 +53,21 @@ This repo is the tutorial I wish that version of me had started with.
 
 ---
 
+## How to use this tutorial / 怎么用这份教程
+
+- **Never touched finance?** Start from `Ch00_preface_fundamentals/` and go in order. Don't skip.
+  **金融零基础**：从 `Ch00_preface_fundamentals/` 开始顺序阅读，不要跳章。
+- **Already trade stocks / FX?** You can skim Ch00–Ch03 and start serious reading at `Ch04_forwards_futures/`.
+  **已经交易股票 / 外汇**：可以略读 Ch00–Ch03，从 `Ch04_forwards_futures/` 开始精读。
+- **Here for options only?** Ch05 → Ch06 → Ch07 → Ch08 → Ch09 is a self-contained options mini-course.
+  **只想学期权**：Ch05 → Ch06 → Ch07 → Ch08 → Ch09 是自洽的期权小课。
+- **Here for crypto perpetuals?** Ch01 → Ch02 → Ch11 → Ch12 → Ch13 is the shortest crypto path.
+  **只想学加密永续**：Ch01 → Ch02 → Ch11 → Ch12 → Ch13 是最短的加密路径。
+- **Every chapter is one `.ipynb` file.** Open, click into the first cell, press `Shift+Enter`, repeat. Drag sliders freely once the interactive cell has run.
+  **每章就是一个 `.ipynb`**：打开、光标点到第一个 cell、按 `Shift+Enter`、往下走。互动 cell 跑完后就可以随便拖滑块。
+
+---
+
 ## Chapter index / 章节索引
 
 ### Part 0 — Starter / 起点
