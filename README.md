@@ -2,6 +2,12 @@
 
 _Re:0 &middot; Futures, Interest & Options — the finance class you thought was philosophy_
 
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Jupyter](https://img.shields.io/badge/jupyter-interactive-F37626?logo=jupyter&logoColor=white)](https://jupyter.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Chapters](https://img.shields.io/badge/chapters-14-blueviolet)](#chapter-index--章节索引)
+[![Bilingual](https://img.shields.io/badge/docs-中文%20%2B%20English-red)](#)
+
 ---
 
 ## 开场：一个美丽的误会 / A Beautiful Misunderstanding
