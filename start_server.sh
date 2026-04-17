@@ -27,7 +27,8 @@ jupyter-lab \
     --ServerApp.tornado_settings="{'headers': {'Content-Security-Policy': 'frame-ancestors *'}}" \
     --ServerApp.cookie_options="{'SameSite': 'None', 'Secure': True}" \
     --ServerApp.disable_check_xsrf=True \
-    --ServerApp.default_url=/lab/tree/README.md \
+    --ServerApp.default_url='/lab/tree/README.md?reset' \
+    --LabApp.default_url='/lab/tree/README.md?reset' \
     --LabApp.news_url=None \
     --LabApp.check_for_updates_class="jupyterlab.NeverCheckForUpdate" \
     --notebook-dir=$NOTEBOOK_DIR
