@@ -1,0 +1,34 @@
+name: sync-to-huggingface
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Only one sync at a time so pushes queue cleanly.
+concurrency:
+  group: hf-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # HF Spaces expect the full git history, not a shallow clone.
+          fetch-depth: 0
+
+      - name: Mirror main to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          set -eu
+          if [ -z "${HF_TOKEN}" ]; then
+            echo "::error::HF_TOKEN secret not set. Add a fine-grained HF write token as a repository secret named HF_TOKEN."
+            exit 1
+          fi
+          git push \
+            "https://user:${HF_TOKEN}@huggingface.co/spaces/jingjiang233/re0-futures-options-and-derivatives" \
+            main
