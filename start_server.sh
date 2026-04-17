@@ -1,5 +1,5 @@
 #!/bin/bash
-JUPYTER_TOKEN="${JUPYTER_TOKEN:=huggingface}"
+JUPYTER_TOKEN="${JUPYTER_TOKEN:-}"
 
 NOTEBOOK_DIR="/home/user/app"
 
@@ -11,6 +11,8 @@ jupyter-lab \
     --no-browser \
     --allow-root \
     --ServerApp.token="$JUPYTER_TOKEN" \
+    --ServerApp.password="" \
+    --IdentityProvider.token="$JUPYTER_TOKEN" \
     --ServerApp.tornado_settings="{'headers': {'Content-Security-Policy': 'frame-ancestors *'}}" \
     --ServerApp.cookie_options="{'SameSite': 'None', 'Secure': True}" \
     --ServerApp.disable_check_xsrf=True \
