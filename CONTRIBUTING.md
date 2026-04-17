@@ -78,6 +78,14 @@ PASS: N  FAIL: 0  TIMEOUT: 0  TOTAL: N
 `N` updates when you add or remove notebooks. Any failure must be fixed before merging.
 `N` 随着章节增减变化。任何失败都必须修好才能合并。
 
+The same script runs in CI on every push and PR via [`.github/workflows/test-notebooks.yml`](.github/workflows/test-notebooks.yml) — the PR will show a red ❌ if any notebook errors out, which blocks merge.
+同样的脚本会在 CI 上跑（`.github/workflows/test-notebooks.yml`），有任何失败 PR 会显示红叉，阻止合并。
+
+## Deployment / 自动部署
+
+You do **not** need to push anywhere except GitHub. A second workflow, [`.github/workflows/sync-to-hf.yml`](.github/workflows/sync-to-hf.yml), mirrors `main` onto the Hugging Face Space git remote on every merge, which triggers the Space to rebuild and redeploy JupyterLab automatically (~3 min).
+你**不需要**除 GitHub 外的任何 push。每次合并到 `main`，`sync-to-hf.yml` 会自动把代码镜像到 Hugging Face Space，触发 rebuild 并重新部署 JupyterLab（约 3 分钟内生效）。
+
 ---
 
 ## Translation help wanted / 征求翻译支援

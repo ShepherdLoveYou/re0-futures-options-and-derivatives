@@ -194,6 +194,45 @@ PASS: 17  FAIL: 0  TIMEOUT: 0  TOTAL: 17
 
 ---
 
+## Where this project lives / 项目托管在哪
+
+| Role / 角色 | Location / 位置 | What it's for / 作用 |
+|---|---|---|
+| Source of truth / 源码源头 | [GitHub `ShepherdLoveYou/re0-futures-options-and-derivatives`](https://github.com/ShepherdLoveYou/re0-futures-options-and-derivatives) | 所有 PR、issue、release 都走 GitHub |
+| Live interactive deploy / 在线部署 | [HF Space `jingjiang233/re0-futures-options-and-derivatives`](https://huggingface.co/spaces/jingjiang233/re0-futures-options-and-derivatives) | Public JupyterLab 环境，浏览器即开即用 |
+
+You only need to push to **GitHub** — the HF Space mirrors itself from GitHub main automatically.
+你**只需要 push 到 GitHub**，HF Space 会从 `main` 自动镜像过去。
+
+### Pipeline / CI 与部署流水线
+
+Every push to `main` on GitHub triggers two workflows in parallel:
+每次向 GitHub `main` 推送都会并行触发两个 workflow：
+
+1. [`test-notebooks.yml`](.github/workflows/test-notebooks.yml) — executes every chapter notebook via `nbconvert` (180 s timeout each). Fails loudly if any notebook errors or times out. PRs run the same check before merge.
+   用 `nbconvert` 执行每个章节 notebook（每个 180 s 超时），有任何报错/超时就整体 fail。PR 合并前也会跑。
+2. [`sync-to-hf.yml`](.github/workflows/sync-to-hf.yml) — mirrors `main` onto the HF Space git remote. HF then rebuilds the Docker image (~2 min on the slim Python base) and restarts the JupyterLab app — the new content is live ~3 minutes after the GitHub push.
+   把 `main` 镜像推到 HF Space 的 git remote，HF 随后 rebuild Docker 镜像（slim 基础镜像下大概 2 分钟）并重启 JupyterLab，整条链路约 3 分钟内生效。
+
+Auth for the sync workflow is a fine-grained HF write token stored as the `HF_TOKEN` repository secret on GitHub, scoped to this single Space.
+同步 workflow 的鉴权是 GitHub secret `HF_TOKEN`，是一个仅授权给这一个 Space 的 HF 细粒度写 token。
+
+### Space container / Space 容器
+
+The Space serves JupyterLab from a [`python:3.11-slim`-based image](Dockerfile) on HF's free CPU tier. The image is hardened so visitors can execute any notebook cell but cannot persist modifications to the tutorial files:
+Space 基于 [`python:3.11-slim` 镜像](Dockerfile) 跑 JupyterLab，使用 HF 免费 CPU。镜像做了安全加固 —— 访客可以跑任意 cell，但无法永久修改教程文件：
+
+- `/home/user/app` — root-owned, read-only at the OS level (save / delete / create all fail with `PermissionError`).
+  `/home/user/app` 归 root，OS 层只读，保存 / 删除 / 新建都会 `PermissionError`。
+- No `sudo` grant — visitors run as the `user` account with no escalation path.
+  没有 `sudo` 授权，访客以 `user` 身份运行，无提权路径。
+- Python runtime (`/usr/local/lib/pythonX.Y/site-packages`) is also root-owned, so no visitor can `pip install` a malicious shim that poisons other sessions.
+  Python 运行时同样 root 所有，访客无法通过 `pip install` 注入恶意包。
+- `/home/user/.jupyter` is the only writable path, reserved for JupyterLab runtime state.
+  `/home/user/.jupyter` 是仅有的可写目录，专供 JupyterLab 运行时使用。
+
+---
+
 ## License
 
 MIT — see [`LICENSE`](LICENSE).
